@@ -1,13 +1,13 @@
 ### Ben Elsworth July 2015
 
-source("http://bioconductor.org/biocLite.R")
-biocIfnot <- function (packageName){
-  if (!(require(packageName, character.only=TRUE))) biocLite(packageName)
-}
-installifnot <- function (packageName){
-  if (!(require(packageName)))
-    install.packages(packageName, dependencies=TRUE, repos="http://cran.rstudio.com/")
-}
+# source("http://bioconductor.org/biocLite.R")
+# biocIfnot <- function (packageName){
+#   if (!(require(packageName, character.only=TRUE))) biocLite(packageName)
+# }
+# installifnot <- function (packageName){
+#   if (!(require(packageName)))
+#     install.packages(packageName, dependencies=TRUE, repos="http://cran.rstudio.com/")
+# }
 #installifnot("ggplot2")
 #installifnot("gplots")
 #installifnot("heatmap.plus")
