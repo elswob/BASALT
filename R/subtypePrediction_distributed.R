@@ -13,7 +13,7 @@
 pam50_wrapper=function(inputDir,inputFile,short){
   calibrationFile<- "./Data/mediansPerDataset_v2.txt"
   trainCentroids<- "./Data/pam50_centroids.txt"
-  trainFile<- "./Data/220arrays_nonUBCcommon+12normal_50g.txt"
+  trainFile<<- "./Data/220arrays_nonUBCcommon+12normal_50g.txt"
   proliferationGenes<-c("CCNB1","UBE2C","BIRC5","KNTC2","CDC20","PTTG1","RRM2","MKI67","TYMS","CEP55","CDCA1")
   stdArray<-T # just for visualization, and only set to F if many missing genes
   predFiles<- paste(inputDir,inputFile,sep="/")
@@ -42,8 +42,9 @@ pam50_wrapper=function(inputDir,inputFile,short){
   # begin analyses
 
   # only need train data for visualizations
+  print(paste0("reading trainFile - ",trainFile))
   x<-readarray(trainFile,hr=2)
-  print(head(x))
+  print(summary(x))
   x$xd<-standardize(medianCtr(x$xd))
 
   # load the published centroids for classifcation
