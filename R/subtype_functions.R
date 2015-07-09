@@ -394,13 +394,13 @@ run_scmgene=function(){
   print(head(anno_m))
 
   #create model
-  load("/Users/ben/Software/PAM50/SCMGENE/data/EXPO.RData")
-  modgene <- lapply(scmod1.robust$mod, function(x) { return(x[1, , drop=FALSE]) })
-  print(modgene)
-  pdf(paste(outDir,"/scmgene_fit_EXPO.pdf",sep=""), width=7, height=7)
-  tt <- subtype.cluster(module.ESR1=modgene$ESR1, module.ERBB2=modgene$ERBB2,module.AURKA=modgene$AURKA, data=data, annot=annot, do.mapping=FALSE, do.scale=TRUE,rescale.q=0.05, plot=TRUE, filen=paste(outDir,"/",sprintf("scmgene_model_EXPO"),sep=""))
-  dev.off()
-  scmgene.expo <<- tt$model
+  #load("/Users/ben/Software/PAM50/SCMGENE/data/EXPO.RData")
+  #modgene <- lapply(scmod1.robust$mod, function(x) { return(x[1, , drop=FALSE]) })
+  #print(modgene)
+  #pdf(paste(outDir,"/scmgene_fit_EXPO.pdf",sep=""), width=7, height=7)
+  #tt <- subtype.cluster(module.ESR1=modgene$ESR1, module.ERBB2=modgene$ERBB2,module.AURKA=modgene$AURKA, data=data, annot=annot, do.mapping=FALSE, do.scale=TRUE,rescale.q=0.05, plot=TRUE, filen=paste(outDir,"/",sprintf("scmgene_model_EXPO"),sep=""))
+  #dev.off()
+  #scmgene.expo <<- tt$model
 
   #flip rows and columns of expression data
   m_flip=t(m)
