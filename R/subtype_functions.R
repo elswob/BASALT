@@ -23,7 +23,7 @@ library(gplots)
 library(org.Hs.eg.db)
 library(genefu)
 library(heatmap.plus)
-library(GMD)
+#library(GMD)
 
 ####################################################################
 #' Set up the analysis
@@ -42,7 +42,7 @@ setup=function(){
   cat("Total in PAM50 groups = ",length(Total),"\n")
 
   #set location of original inputDir
-  oldInputDir=inputDir
+  oldInputDir<<-inputDir
 
   #set percentage of samples required for a gene to be kept
   sampleNum<<-5
@@ -365,6 +365,9 @@ run_p50=function(){
   pdf(paste(outDir,"/classification_plot_ungrouped.pdf",sep=""))
   print(g)
   dev.off()
+
+  #plot the correlation coefficients
+  cor_plot(pam.res,".","Samples")
 }
 
 ################# SCMGENE #######################
