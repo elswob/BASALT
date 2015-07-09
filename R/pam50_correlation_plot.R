@@ -40,7 +40,10 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' @param p50 The PAM50 results text file
 #' @param id The ID of the samples to extract
 #' @param name The name to represent the samples
-cor_plot = function(p50,id,name){
+cor_plot = function(p,id,name){
+  print(paste0("Generating correlation plots - ",id," - ",name))
+  p$X=rownames(p)
+  print(head(p))
   #get colors
   #myPal <- brewer.pal(6, "Spectral")
   myPal = c("red","green","blue","orange","purple","black")
@@ -78,11 +81,12 @@ cor_plot = function(p50,id,name){
 
   p$X <- factor(p$X, levels = p[order(p$Call), "X"])
   fm=melt(p,id.vars=c("X","Call"),measure.vars=subtypes)
+  print(head(fm))
   #set the colours for the ticks
   colorOrder = myPal[as.character(p[order(p$Call),]$Call)]
   p2=plotter("Call")
 
-  pdf(paste0(name,".pdf"))
+  pdf(paste0(inputDir,"/",name,"_cor_coef_plot.pdf"))
   multiplot(p1,p2,cols=2)
   dev.off()
 }

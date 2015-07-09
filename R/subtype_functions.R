@@ -12,6 +12,7 @@
 #installifnot("gplots")
 #installifnot("heatmap.plus")
 #installifnot("GMD")
+#installifnot("reshape")
 #biocIfnot("limma")
 #biocIfnot("org.Hs.eg.db")
 #biocIfnot("genefu")
@@ -23,6 +24,7 @@ library(gplots)
 library(org.Hs.eg.db)
 library(genefu)
 library(heatmap.plus)
+library(reshape)
 #library(GMD)
 
 ####################################################################
@@ -367,7 +369,7 @@ run_p50=function(){
   dev.off()
 
   #plot the correlation coefficients
-  cor_plot(pam.res,".","Samples")
+  cor_plot(pam.res,".",short)
 }
 
 ################# SCMGENE #######################

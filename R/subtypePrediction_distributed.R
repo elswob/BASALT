@@ -11,13 +11,12 @@
 #8. Assign the class of the most highly correlated centroid to each sample
 
 pam50_wrapper=function(inputDir,inputFile,short){
-  calibrationFile<- "./Data/mediansPerDataset_v2.txt"
-  trainCentroids<- "./Data/pam50_centroids.txt"
-  trainFile<<- "./Data/220arrays_nonUBCcommon+12normal_50g.txt"
+  calibrationFile<- "./pam50_data/mediansPerDataset_v2.txt"
+  trainCentroids<- "./pam50_data/pam50_centroids.txt"
+  trainFile<<- "./pam50_data/220arrays_nonUBCcommon+12normal_50g.txt"
   proliferationGenes<-c("CCNB1","UBE2C","BIRC5","KNTC2","CDC20","PTTG1","RRM2","MKI67","TYMS","CEP55","CDCA1")
   stdArray<-T # just for visualization, and only set to F if many missing genes
   predFiles<- paste(inputDir,inputFile,sep="/")
-
 
   ###
   # some constants
