@@ -13,13 +13,11 @@
 #installifnot("heatmap.plus")
 #installifnot("GMD")
 #installifnot("reshape")
-#biocIfnot("limma")
 #biocIfnot("org.Hs.eg.db")
 #biocIfnot("genefu")
 #biocIfnot("ctc")
 
 library(ggplot2)
-library(limma)
 library(gplots)
 library(org.Hs.eg.db)
 library(genefu)

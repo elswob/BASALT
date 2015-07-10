@@ -27,6 +27,17 @@ AARS	10.73831	10.82067	10.40384	9.457173	10.26427	10.38802	10.48933	9.772005
 install.packages("devtools")
 devtools::install_github("elswob/BASAL")
 ```
+Install some libraries
+
+```
+library(ggplot2)
+library(gplots)
+library(org.Hs.eg.db)
+library(genefu)
+library(heatmap.plus)
+library(reshape)
+library(RColorBrewer)
+```
 
 ### To run
 
