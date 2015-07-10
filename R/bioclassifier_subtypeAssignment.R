@@ -3,11 +3,6 @@
 ###
 
 bio_sub=function(){
-  paramDir<<- "./Data" # the location of unchanging files such as the function library and main program
-  #inputDir<- "" # the location of the data matrix, and where output will be located
-  #inputFile<- "" # the input data matrix as a tab delimited text file
-  #short<-"" # short name that will be used for output files
-
   calibrationParameters<<- NA 	#the column of the "mediansPerDataset.txt" file to use for calibration;
   														#NA will force centering within the test set & -1 will not do any
   														#adjustment (when adjustment performed by used)
@@ -19,12 +14,4 @@ bio_sub=function(){
   collapseMethod<-"mean" # can be mean or iqr (probe with max iqr is selected)
   											# typically, mean is preferred for long oligo and
   											# iqr is preferred for short oligo platforms
-
-
-  ####
-  # run the assignment algorithm
-  ####
-
-  #source(paste(paramDir,"subtypePrediction_functions.R",sep="/"))
-  #source(paste(paramDir,"subtypePrediction_distributed.R",sep="/"))
 }
