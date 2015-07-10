@@ -541,7 +541,7 @@ run_scmgene=function(){
 #' @param inputDir The directory containing the input file
 #' @param inputFile A dataframe of expression data with row names as gene symbols and column names as unique sample IDs
 #' @param short A short name for the analysis
-run_analysis=function(d,f,s){
+run_basal=function(d,f,s){
   inputDir<<-d
   inputFile<<-f
   short<<-s
