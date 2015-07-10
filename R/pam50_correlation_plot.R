@@ -86,7 +86,7 @@ cor_plot = function(p,id,name){
   colorOrder = myPal[as.character(p[order(p$Call),]$Call)]
   p2=plotter("Call")
 
-  pdf(paste0(inputDir,"/",name,"_cor_coef_plot.pdf"))
+  pdf(paste0(inputDir,"/",short,"_cor_coef_plot.pdf"))
   multiplot(p1,p2,cols=2)
   dev.off()
 }

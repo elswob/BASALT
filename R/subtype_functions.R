@@ -25,6 +25,7 @@ library(org.Hs.eg.db)
 library(genefu)
 library(heatmap.plus)
 library(reshape)
+library(RColorBrewer)
 #library(GMD)
 
 ####################################################################
@@ -47,7 +48,7 @@ setup=function(){
   oldInputDir<<-inputDir
 
   #set percentage of samples required for a gene to be kept
-  sampleNum<<-5
+  sampleNum<<-50
 
   #set pam50 confidence cutoff
   pamCC<<-0.75
@@ -86,9 +87,10 @@ setup=function(){
   mo=m
   print("Filtering genes based on percentage:")
   print(sampleNum)
-  m=(m[rowSums(m != 0)>(ncol(m)/100)*(100-sampleNum),])
+  m=(m[rowSums(m != 0,na.rm=T)>(ncol(m)/100)*(100-sampleNum),])
   #m=(m[rowSums(!is.na(m))>(ncol(m)/100)*(100-sampleNum),])
-  cat("NA genes removed = ",dim(m),"\n")
+  #print(rowSums(m,na.rm=T))
+  cat("Genes removed = ",dim(m),"\n")
   missing<-setdiff(sort(rownames(mo)),sort(rownames(m)))
   if(length(missing)>0){
     cat("The genes",missing,"have been removed from the data set\n")
@@ -123,17 +125,16 @@ heatmap_row_colours=function(m){
   g6=rownames(m) %in% Basal_pehnotype
   gNames = c('ER Signalling','Growth Factor Signalling','Proliferation','Invasion','Miscellaneous','Basal pehnotype')
 
-  gCol=c('gray', 'blue', 'black','red','orange','purple')
-
+  gCol= brewer.pal(6,"Pastel1")
   #initialise vector
   gVec=c(rep("black",nrow(m)))
 
-  gVec = replace(gVec,which(g1),"gray")
-  gVec = replace(gVec,which(g2),"blue")
-  gVec = replace(gVec,which(g3),"black")
-  gVec = replace(gVec,which(g4),"red")
-  gVec = replace(gVec,which(g5),"orange")
-  gVec = replace(gVec,which(g6),"purple")
+  gVec = replace(gVec,which(g1),gCol[1])
+  gVec = replace(gVec,which(g2),gCol[2])
+  gVec = replace(gVec,which(g3),gCol[3])
+  gVec = replace(gVec,which(g4),gCol[4])
+  gVec = replace(gVec,which(g5),gCol[5])
+  gVec = replace(gVec,which(g6),gCol[6])
   #print(gVec)
 
   gLegText=character()
@@ -156,7 +157,8 @@ heatmap_row_colours=function(m){
 #'
 #' @param m A data frame with gene symbols as row names.
 heatmap_col_colours=function(m){
-  gCol=c('chocolate2','coral1','cyan','darkgoldenrod1','chartreuse4','chocolate','darkgray','darkmagenta','darkred','aquamarine','aquamarine4','beige','bisque4','black','blue','blueviolet','brown','burlywood','cadetblue1','chartreuse')  #print("# of col colours")
+  gCol <- brewer.pal(6,"Pastel2")
+  #gCol=c('chocolate2','coral1','cyan','darkgoldenrod1','chartreuse4','chocolate','darkgray','darkmagenta','darkred','aquamarine','aquamarine4','beige','bisque4','black','blue','blueviolet','brown','burlywood','cadetblue1','chartreuse')  #print("# of col colours")
   #print(length(colData))
   c=colnames(m)
   cs=unique(sub("_.*","",c))
@@ -191,8 +193,8 @@ makeHeatmap=function(m,title,pam.res){
   print(head(m[,0:5]))
 
   #pdf(paste(inputDir,"/heatmap_plus.pdf",sep=""))
-
-  subtypeCols=c("green","blue","red","orange","purple")
+  subtypeCols=brewer.pal(6,"Dark2")
+  #subtypeCols=c("green","blue","red","orange","purple","yellow")
   g=grey.colors(10,start=0.9,end=0)
   gCols=g[pScores*10]
 
@@ -201,8 +203,13 @@ makeHeatmap=function(m,title,pam.res){
   pText=unique(as.factor(pam.res$Call))
   pCol=unique(pCols)
 
-  cMat = cbind(cgVec,pCols,gCols)
-  colnames(cMat)=c("Sample","Call","Confidence")
+  if(length(cgVec>5)){
+    cMat=cbind(pCols,gCols)
+    colnames(cMat)=c("Call","Confidence")
+  }else{
+    cMat = cbind(cgVec,pCols,gCols)
+    colnames(cMat)=c("Sample","Subtype Call","Confidence")
+  }
   rMat = as.matrix(t(rgVec))
   #rownames(rMat)=c("PAM50 group")
 
@@ -219,7 +226,7 @@ makeHeatmap=function(m,title,pam.res){
   mydist=function(c) {dist(c,method="euclidian")}
   myclust=function(c) {hclust(c,method="average")}
 
-  #Create heatmap using custom heatmap.3 source code loaded above
+  #Create heatmap using custom heatmap.3
   main_title="PAM50 subtype classification"
   par(cex.main=1)
   #col.pal <- brewer.pal(9,"YlOrRd")
@@ -245,38 +252,51 @@ makeHeatmap=function(m,title,pam.res){
     density.info="none",
     trace="none",
     main=main_title,
-    labCol=FALSE,
+    labCol=colnames(m),
     cexRow=1,
-    ColSideColorsSize=6,
+    cexCol=0.5,
+    ColSideColorsSize=3,
     RowSideColorsSize=1,
     KeyValueName="log2 Expression"
   )
+  if(length(cgVec)<=5){
+    legend(
+      0.9, 0.55,
+      #"topright",      # location of the legend on the heatmap plot
+      legend = cgLegText, # category labels
+      col = cgLegCol,  # color key
+      lty= 1,             # line style
+      lwd = 5,            # line width
+      cex = 0.4,
+      #inset = 0.02
+      title="Sample"
 
+    )
+  }
   legend(
-    0.9, 0.93,
-    #"topright",      # location of the legend on the heatmap plot
-    legend = cgLegText, # category labels
-    col = cgLegCol,  # color key
-    lty= 1,             # line style
-    lwd = 5,            # line width
-    cex = 0.4,
-    #inset = 0.02
-    title="Sample"
-
+    0.9,0.8,
+    legend=c("High","Low"),
+    col=c("Black","Grey"),
+    lty=1,
+    lwd=5,
+    cex=0.4,
+    title="Confidence"
   )
   legend(
-    0.1, 0.8,
+    0.9, 0.7,
+    #"right",
     legend = pText, # category labels
     col = pCol,  # color key
     lty= 1,             # line style
     lwd = 5,            # line width
     cex = 0.4,
-    inset = 0.1,
     title="Subtype Call"
   )
   legend(
-    0.01, 0.35,
+    0, 0.4,
+    #"bottomright",
     legend = rgLegText, # category labels
+    bg = "white",
     col = rgLegCol,  # color key
     lty= 1,             # line style
     lwd = 5,            # line width
@@ -317,7 +337,7 @@ run_p50=function(){
 
   #inputFile="pam50_median_normalised_10_each.txt"
   inputFile<<-"pam50_median_normalised.txt"
-  short<<-"res"
+  #short<<-"res"
   inputDir <<- paste(inputDir,"/PAM50",sep="")
 
   ### Run PAM50
