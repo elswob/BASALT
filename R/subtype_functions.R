@@ -1,34 +1,17 @@
 ### Ben Elsworth July 2015
 
-# source("http://bioconductor.org/biocLite.R")
-# biocIfnot <- function (packageName){
-#   if (!(require(packageName, character.only=TRUE))) biocLite(packageName)
-# }
-# installifnot <- function (packageName){
-#   if (!(require(packageName)))
-#     install.packages(packageName, dependencies=TRUE, repos="http://cran.rstudio.com/")
-# }
-#installifnot("ggplot2")
-#installifnot("gplots")
-#installifnot("heatmap.plus")
-#installifnot("GMD")
-#installifnot("reshape")
-#biocIfnot("org.Hs.eg.db")
-#biocIfnot("genefu")
-#biocIfnot("ctc")
-
-library(ggplot2)
-library(gplots)
-library(org.Hs.eg.db)
-library(genefu)
-library(heatmap.plus)
-library(reshape)
-library(RColorBrewer)
-#library(GMD)
-
 ####################################################################
 #' Set up the analysis
 setup=function(){
+  #load libraries
+  library(ggplot2)
+  library(gplots)
+  library(org.Hs.eg.db)
+  library(genefu)
+  library(heatmap.plus)
+  library(reshape)
+  library(RColorBrewer)
+
   #load PAM50 genes
   p50<<-c('ACTR3B','ANLN','BAG1','BCL2','BIRC5','BLVRA','CCNB1','CCNE1','CDC20','CDC6','CDCA1','CDH3','CENPF','CEP55','CXXC5','EGFR','ERBB2','ESR1','EXO1','FGFR4','FOXA1','FOXC1','GPR160','GRB7','KIF2C','KNTC2','KRT14','KRT17','KRT5','MAPT','MDM2','MELK','MIA','MKI67','MLPH','MMP11','MYBL2','MYC','NAT1','ORC6L','PGR','PHGDH','PTTG1','RRM2','SFRP1','SLC39A6','TMEM45B','TYMS','UBE2C','UBE2T')
 

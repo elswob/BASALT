@@ -4,14 +4,14 @@
 \alias{cor_plot}
 \title{Generate the PAM50 correlation coefficient plots}
 \usage{
-cor_plot(p50, id, name)
+cor_plot(p, id, name)
 }
 \arguments{
-\item{p50}{The PAM50 results text file}
-
 \item{id}{The ID of the samples to extract}
 
 \item{name}{The name to represent the samples}
+
+\item{p50}{The PAM50 results text file}
 }
 \description{
 Generate the PAM50 correlation coefficient plots
