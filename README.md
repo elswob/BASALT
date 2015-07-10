@@ -50,6 +50,8 @@ Need three arguements:
 2. The name of the expression data file
 3. A short name for the data
 
+Example breast cancer data from the Cancer Cell Line Encyclopedia (CCLE) is available for testing.
+
 ```
 run_basal("ccle_data","CCLE.tsv","ccle")
 ```
@@ -58,3 +60,30 @@ run_basal("ccle_data","CCLE.tsv","ccle")
 
 1. A combined tsv file for all subtype methods (subtype_summary.tsv)
 2. Detailed output from PAM50 and SCMGENE
+
+
+### Session Info
+
+```
+sessionInfo()
+R version 3.2.0 (2015-04-16)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.9.5 (Mavericks)
+
+locale:
+[1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+
+attached base packages:
+ [1] grid      parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] impute_1.42.0        ctc_1.42.0           amap_0.8-14          RColorBrewer_1.1-2   reshape_0.8.5        heatmap.plus_1.3     genefu_1.18.0        biomaRt_2.24.0      
+ [9] mclust_5.0.1         survcomp_1.18.0      prodlim_1.5.1        survival_2.38-3      org.Hs.eg.db_3.1.2   RSQLite_1.0.0        DBI_0.3.1            AnnotationDbi_1.30.1
+[17] GenomeInfoDb_1.4.1   IRanges_2.2.5        S4Vectors_0.6.1      Biobase_2.28.0       BiocGenerics_0.14.0  gplots_2.17.0        ggplot2_1.0.1        BASAL_0.1           
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.11.6        plyr_1.8.3         bitops_1.0-6       tools_3.2.0        digest_0.6.8       gtable_0.1.2       proto_0.3-10       bootstrap_2015.2   stringr_1.0.0     
+[10] SuppDists_1.1-9.1  gtools_3.5.0       caTools_1.17.1     XML_3.98-1.3       gdata_2.17.0       lava_1.4.1         rmeta_2.16         reshape2_1.4.1     magrittr_1.5      
+[19] scales_0.2.5       survivalROC_1.0.3  MASS_7.3-42        splines_3.2.0      colorspace_1.2-6   labeling_0.3       KernSmooth_2.23-15 stringi_0.5-5      RCurl_1.95-4.7    
+[28] munsell_0.4.2   
+```
