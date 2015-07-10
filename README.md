@@ -32,6 +32,7 @@ library(genefu)
 library(heatmap.plus)
 library(reshape)
 library(RColorBrewer)
+library(ctc)
 ```
 
 Install and load BASAL
