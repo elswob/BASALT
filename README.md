@@ -24,14 +24,29 @@ AARS	10.73831	10.82067	10.40384	9.457173	10.26427	10.38802	10.48933	9.772005
 ### Installation
 
 Install some libraries
+
+```
+install.packages("ggplot2")
+install.packages("gplots")
+install.packages("org.Hs.eg.db")
+install.packages("heatmap.plus")
+install.packages("reshape")
+install.packages("RColorBrewer")
+source("http://bioconductor.org/biocLite.R")
+biocLite("genefu")
+biocLite("ctc")
+```
+
+Load them up
+
 ```
 library(ggplot2)
 library(gplots)
 library(org.Hs.eg.db)
-library(genefu)
 library(heatmap.plus)
 library(reshape)
 library(RColorBrewer)
+library(genefu)
 library(ctc)
 ```
 
