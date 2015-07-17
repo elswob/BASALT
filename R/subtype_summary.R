@@ -1,6 +1,6 @@
 #' Define the row colours for the heatmap.
 #'
-#' @param m A data frame with gene symbols as row names.
+#' @param m The final subtype summary dataframe
 plot_summary=function(m){
   print('Plotting summary...')
   print(head(m))
