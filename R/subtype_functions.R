@@ -30,7 +30,7 @@ setup=function(){
   oldInputDir<<-inputDir
 
   #set percentage of samples required for a gene to be kept
-  sampleNum<<-50
+  sampleNum<<-5
 
   #set pam50 confidence cutoff
   pamCC<<-0.75
@@ -359,12 +359,12 @@ run_p50=function(){
   qplot(x, main="Classification into subtypes", xlab="Confidence")
 
   pdf(paste(outDir,"/classification_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "PAM50 classification counts", y = "Classification Percentage", x = "Cell type", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "PAM50 classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   dev.off()
 
   qplot(Confidence, Call, data=pam.res, col=Call, main="Classification into subtypes") + geom_vline(xintercept=0.9, col="red", lty=2)
-  g <- ggplot(pam.res, aes(factor(rownames(pam.res)), Confidence)) + geom_bar(stat = "identity",aes(fill = Call)) + labs(title = "PAM50 classification", y = "Classification Confidence", x = "Cell type", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  g <- ggplot(pam.res, aes(factor(rownames(pam.res)), Confidence)) + geom_bar(stat = "identity",aes(fill = Call)) + labs(title = "PAM50 classification", y = "Classification Confidence", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   pdf(paste(outDir,"/classification_plot_ungrouped.pdf",sep=""))
   print(g)
@@ -501,7 +501,7 @@ run_scmgene=function(){
   colnames(pam.res)[1]="Call"
 
   pdf(paste(outDir,"/pam50_robust_classification_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE PAM50 robust classification counts", y = "Classification Percentage", x = "Cell type", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE PAM50 robust classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   dev.off()
 
@@ -511,7 +511,7 @@ run_scmgene=function(){
   colnames(pam.res)[1]="Call"
 
   pdf(paste(outDir,"/scmgene_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE classification counts", y = "Classification Percentage", x = "Cell type", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   dev.off()
 
@@ -530,6 +530,7 @@ run_basal=function(d,f,s){
   setup()
   run_scmgene()
   run_p50()
+  plot_summary(master_df)
   #print master dataframe to file
   write.table(master_df,paste(oldInputDir,"/subtype_summary.tsv",sep=""),sep="\t",quote=F,row.names=F)
 }
