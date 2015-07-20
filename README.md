@@ -32,6 +32,7 @@ install.packages("org.Hs.eg.db")
 install.packages("heatmap.plus")
 install.packages("reshape")
 install.packages("RColorBrewer")
+install.packages("devtools")
 source("http://bioconductor.org/biocLite.R")
 biocLite("genefu")
 biocLite("ctc")
@@ -48,12 +49,12 @@ library(reshape)
 library(RColorBrewer)
 library(genefu)
 library(ctc)
+library(devtools)
 ```
 
 Install and load BASAL
 ```
-install.packages("devtools")
-devtools::install_github("elswob/BASAL")
+install_github("elswob/BASAL")
 libary(BASAL)
 ```
 
