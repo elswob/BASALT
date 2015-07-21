@@ -4,12 +4,12 @@
 \alias{run_basal}
 \title{Run the subtype analysis}
 \usage{
-run_basal(d, f, s)
+run_basal(outDir, inputFile, short)
 }
 \arguments{
-\item{inputDir}{The directory containing the input file}
+\item{outDir}{The directory containing for the output}
 
-\item{inputFile}{A dataframe of expression data with row names as gene symbols and column names as unique sample IDs}
+\item{inputFile}{The full path to a dataframe of expression data with row names as gene symbols and column names as unique sample IDs}
 
 \item{short}{A short name for the analysis}
 }

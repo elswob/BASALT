@@ -4,7 +4,7 @@
 \alias{setup}
 \title{Set up the analysis}
 \usage{
-setup()
+setup(outDir)
 }
 \description{
 Set up the analysis

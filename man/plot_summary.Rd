@@ -4,10 +4,10 @@
 \alias{plot_summary}
 \title{Define the row colours for the heatmap.}
 \usage{
-plot_summary(m)
+plot_summary(m, outDir)
 }
 \arguments{
-\item{m}{A data frame with gene symbols as row names.}
+\item{m}{The final subtype summary dataframe}
 }
 \description{
 Define the row colours for the heatmap.

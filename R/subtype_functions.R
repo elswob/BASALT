@@ -1,17 +1,17 @@
-### Ben Elsworth July 2015
+#load libraries
+library(ggplot2)
+library(gplots)
+library(org.Hs.eg.db)
+library(genefu)
+library(heatmap.plus)
+library(reshape)
+library(RColorBrewer)
+library(ctc)
 
-####################################################################
 #' Set up the analysis
-setup=function(){
-  #load libraries
-  #library(ggplot2)
-  #library(gplots)
-  #library(org.Hs.eg.db)
-  #library(genefu)
-  #library(heatmap.plus)
-  #library(reshape)
-  #library(RColorBrewer)
-  #library(ctc)
+setup=function(outDir){
+  #make the output directory if it doesn't already exist
+  dir.create(outDir,showWarnings = F)
 
   #load PAM50 genes
   p50<<-c('ACTR3B','ANLN','BAG1','BCL2','BIRC5','BLVRA','CCNB1','CCNE1','CDC20','CDC6','CDCA1','CDH3','CENPF','CEP55','CXXC5','EGFR','ERBB2','ESR1','EXO1','FGFR4','FOXA1','FOXC1','GPR160','GRB7','KIF2C','KNTC2','KRT14','KRT17','KRT5','MAPT','MDM2','MELK','MIA','MKI67','MLPH','MMP11','MYBL2','MYC','NAT1','ORC6L','PGR','PHGDH','PTTG1','RRM2','SFRP1','SLC39A6','TMEM45B','TYMS','UBE2C','UBE2T')
@@ -26,9 +26,6 @@ setup=function(){
   Total<<-c('BAG1','BCL2','BLVRA','CXXC5','ESR1','FOXA1','GPR160','MAPT','MLPH','NAT1','PGR1','SLC39A6','EGFR','ERBB2','FGFR4','GRB7','ANLN','BIRC5','CCNB1','CCNE1','CDC20','CDC6','CDCA1','CENPF','CEP55','EX01','KIF2C','KNTC2','MELK','MKI67','MYBL2','ORC6','PTTG1','RRM2','TYMS','UBE2C','UBE2T','MMP11','ACTR3B','MDM2','TMEM4B','CDH3','FOXC1','KRT14','KRT17','KRT5','MIA','MYC','PHGDH','SFRP1')
   cat("Total in PAM50 groups = ",length(Total),"\n")
 
-  #set location of original inputDir
-  oldInputDir<<-inputDir
-
   #set percentage of samples required for a gene to be kept
   sampleNum<<-5
 
@@ -36,7 +33,7 @@ setup=function(){
   pamCC<<-0.75
 
   #read in the data
-  p_file=paste(inputDir,"/",inputFile,sep="")
+  p_file=inputFile
   cat("Reading ",p_file,"\n")
 
   m<-read.delim(p_file,header=T, sep = "\t")
@@ -174,7 +171,6 @@ makeHeatmap=function(m,title,pam.res){
 
   print(head(m[,0:5]))
 
-  #pdf(paste(inputDir,"/heatmap_plus.pdf",sep=""))
   subtypeCols=brewer.pal(6,"Dark2")
   #subtypeCols=c("green","blue","red","orange","purple","yellow")
   g=grey.colors(10,start=0.9,end=0)
@@ -296,7 +292,7 @@ run_p50=function(){
   cat("\n ---- Running standard PAM50 analysis ----\n")
   #print(head(m))
 
-  outDir=paste(inputDir,"/PAM50",sep="")
+  outDir=paste(outDir,"/PAM50",sep="")
   dir.create(outDir,showWarnings = FALSE)
 
   #get pam50 set
@@ -318,14 +314,14 @@ run_p50=function(){
   write.table(m_n,file=final_p_file,sep="\t",quote=F,row.names=T,col.names=NA)
 
   #inputFile="pam50_median_normalised_10_each.txt"
-  inputFile<<-"pam50_median_normalised.txt"
+  inputFile<<-paste0(outDir,"/pam50_median_normalised.txt")
   #short<<-"res"
-  inputDir <<- paste(inputDir,"/PAM50",sep="")
+  outDir <<- outDir
 
   ### Run PAM50
   print("Running PAM50")
   bio_sub()
-  pam50_wrapper(inputDir,inputFile,short)
+  pam50_wrapper(outDir,inputFile,short)
 
   ### Plot the output
   pam.result.file <- paste(outDir,"/",short,"_pam50scores.txt",sep="")
@@ -380,7 +376,7 @@ run_p50=function(){
 run_scmgene=function(){
   cat("\n ---- Running SCMGENE analysis ----\n")
 
-  outDir=paste(inputDir,"/scmgene",sep="")
+  outDir=paste(outDir,"/scmgene",sep="")
   dir.create(outDir,showWarnings = FALSE)
 
   #create annotation df of gene symbol and EntrezGene.ID
@@ -517,20 +513,20 @@ run_scmgene=function(){
 
 }
 
-#run the functions, make sure to run p50 last as it resets the inputDir variable
+#run the functions
 #' Run the subtype analysis
 #'
-#' @param inputDir The directory containing the input file
-#' @param inputFile A dataframe of expression data with row names as gene symbols and column names as unique sample IDs
+#' @param outDir The directory containing for the output
+#' @param inputFile The full path to a dataframe of expression data with row names as gene symbols and column names as unique sample IDs
 #' @param short A short name for the analysis
-run_basal=function(d,f,s){
-  inputDir<<-d
-  inputFile<<-f
-  short<<-s
-  setup()
+run_basal=function(outDir,inputFile,short){
+  outDir<<-outDir
+  inputFile<<-inputFile
+  short<<-short
+  setup(outDir)
   run_scmgene()
   run_p50()
-  plot_summary(master_df)
+  plot_summary(master_df,outDir)
   #print master dataframe to file
-  write.table(master_df,paste(oldInputDir,"/subtype_summary.tsv",sep=""),sep="\t",quote=F,row.names=F)
+  write.table(master_df,paste(outDir,"/subtype_summary.tsv",sep=""),sep="\t",quote=F,row.names=F)
 }

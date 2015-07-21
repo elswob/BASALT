@@ -10,13 +10,14 @@
 #7. Calculate Spearman's rank correlation between each sample and each subtype centroid (in pam50_centroids.txt)
 #8. Assign the class of the most highly correlated centroid to each sample
 
-pam50_wrapper=function(inputDir,inputFile,short){
-  calibrationFile<- "./pam50_data/mediansPerDataset_v2.txt"
-  trainCentroids<- "./pam50_data/pam50_centroids.txt"
-  trainFile<<- "./pam50_data/220arrays_nonUBCcommon+12normal_50g.txt"
+pam50_wrapper=function(outDir,inputFile,short){
+
+  calibrationFile<- system.file("extdata","mediansPerDataset_v2.txt",package="BASAL")
+  trainCentroids<- system.file("extdata","pam50_centroids.txt",package="BASAL")
+  trainFile<<- system.file("extdata","220arrays_nonUBCcommon+12normal_50g.txt",package="BASAL")
   proliferationGenes<-c("CCNB1","UBE2C","BIRC5","KNTC2","CDC20","PTTG1","RRM2","MKI67","TYMS","CEP55","CDCA1")
   stdArray<-T # just for visualization, and only set to F if many missing genes
-  predFiles<- paste(inputDir,inputFile,sep="/")
+  predFiles<- inputFile
 
   ###
   # some constants
@@ -49,10 +50,10 @@ pam50_wrapper=function(inputDir,inputFile,short){
   # load the published centroids for classifcation
   pamout.centroids<-read.table(trainCentroids,sep="\t",header=T,row.names=1)
 
-	pdfname1<-paste(inputDir,paste("predictionScores_pam50RankCorrelation_1_",short,".pdf",sep=""),sep="/")
-	pdfname2<-paste(inputDir,paste("predictionScores_pam50RankCorrelation_2_",short,".pdf",sep=""),sep="/")
-	clustername<-paste(inputDir,paste(short,"_PAM50_normalized_heatmap",sep=""),sep="/")
-	outFile<- paste(inputDir,paste(short,"_pam50scores.txt",sep=""),sep="/")
+	pdfname1<-paste(outDir,paste("predictionScores_pam50RankCorrelation_1_",short,".pdf",sep=""),sep="/")
+	pdfname2<-paste(outDir,paste("predictionScores_pam50RankCorrelation_2_",short,".pdf",sep=""),sep="/")
+	clustername<-paste(outDir,paste(short,"_PAM50_normalized_heatmap",sep=""),sep="/")
+	outFile<- paste(outDir,paste(short,"_pam50scores.txt",sep=""),sep="/")
 
 	# read in the data file
 	if(hasClinical){

@@ -62,14 +62,15 @@ libary(BASAL)
 
 Need three arguements:
 
-1. The name of the directory containing the expression data
-2. The name of the expression data file
+1. The name of the directory for the output
+2. The full path and name of the expression data file
 3. A short name for the data
 
 Example breast cancer data from the Cancer Cell Line Encyclopedia (CCLE) is available for testing.
 
 ```
-run_basal("ccle_data","CCLE.tsv","ccle")
+s=system.file("extdata","CCLE.tsv",package="BASAL")
+run_basal("~/subtype_test",s,"ccle")
 ```
 
 ### Output
