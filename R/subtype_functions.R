@@ -9,10 +9,10 @@ library(RColorBrewer)
 library(ctc)
 
 #' Set up the analysis
-setup=function(outDir,pamCC,samp_num){
+setup=function(outDir,samp_num){
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
-
+  print(paste0('pamCC = ',pamCC))
   #load PAM50 genes
   p50<<-c('ACTR3B','ANLN','BAG1','BCL2','BIRC5','BLVRA','CCNB1','CCNE1','CDC20','CDC6','CDCA1','CDH3','CENPF','CEP55','CXXC5','EGFR','ERBB2','ESR1','EXO1','FGFR4','FOXA1','FOXC1','GPR160','GRB7','KIF2C','KNTC2','KRT14','KRT17','KRT5','MAPT','MDM2','MELK','MIA','MKI67','MLPH','MMP11','MYBL2','MYC','NAT1','ORC6L','PGR','PHGDH','PTTG1','RRM2','SFRP1','SLC39A6','TMEM45B','TYMS','UBE2C','UBE2T')
 
@@ -28,9 +28,6 @@ setup=function(outDir,pamCC,samp_num){
 
   #set percentage of samples required for a gene to be kept
   sampleNum<-samp_num
-
-  #set pam50 confidence cutoff
-  pamCC<-pamCC
 
   #read in the data
   p_file=inputFile
@@ -283,11 +280,10 @@ makeHeatmap=function(m,title,pam.res){
   )
 }
 
-
 ########### PAM50 standard #################
 
 #' Run the standard PAM50 analysis.
-run_p50=function(){
+run_p50=function(pamCC){
 
   cat("\n ---- Running standard PAM50 analysis ----\n")
   #print(head(m))
@@ -328,8 +324,8 @@ run_p50=function(){
   pam.res <<- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
 
   #find calls with low confidence
-  levels(pam.res$Call) <- c(levels(pam.res$Call), "LC")
-  pam.res$Call[pam.res$Confidence<pamCC]="LC"
+  levels(pam.res$Call) <- c(levels(pam.res$Call), "Low Conf")
+  pam.res$Call[pam.res$Confidence<pamCC]="Low Conf"
 
   #heatmaps
   pdf(paste(outDir,"/heatmap_raw_data.pdf",sep=""))
@@ -493,7 +489,7 @@ run_scmgene=function(){
 
   #plot the pam50 robust data
   pam.result.file <- paste(outDir,"/scmgene_pam50_robust_out.txt",sep="")
-  pam.res <<- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
+  pam.res <- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
   colnames(pam.res)[1]="Call"
 
   pdf(paste(outDir,"/pam50_robust_classification_plot_grouped.pdf",sep=""))
@@ -502,15 +498,14 @@ run_scmgene=function(){
   dev.off()
 
   #plot the scmgene data
-  pam.result.file <- paste(outDir,"/scmgene_out.txt",sep="")
-  pam.res <<- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
-  colnames(pam.res)[1]="Call"
+  #pam.result.file <- paste(outDir,"/scmgene_out.txt",sep="")
+  #pam.res <- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
+  #colnames(pam.res)[1]="Call"
 
-  pdf(paste(outDir,"/scmgene_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
-  print(g)
-  dev.off()
-
+  #pdf(paste(outDir,"/scmgene_plot_grouped.pdf",sep=""))
+  #g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  #print(g)
+  #dev.off()
 }
 
 #run the functions
@@ -525,9 +520,9 @@ run_basal=function(outDir,inputFile,short,pamCC=0.75,samp_num=5){
   outDir<<-outDir
   inputFile<<-inputFile
   short<<-short
-  setup(outDir,pamCC,samp_num)
+  setup(outDir,samp_num)
   run_scmgene()
-  run_p50()
+  run_p50(pamCC)
   plot_summary(master_df,outDir)
   #print master dataframe to file
   write.table(master_df,paste(outDir,"/subtype_summary.tsv",sep=""),sep="\t",quote=F,row.names=F)
