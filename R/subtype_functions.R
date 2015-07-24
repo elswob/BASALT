@@ -9,7 +9,7 @@ library(RColorBrewer)
 library(ctc)
 
 #' Set up the analysis
-setup=function(outDir){
+setup=function(outDir,pamCC,samp_num){
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
 
@@ -27,10 +27,10 @@ setup=function(outDir){
   cat("Total in PAM50 groups = ",length(Total),"\n")
 
   #set percentage of samples required for a gene to be kept
-  sampleNum<<-5
+  sampleNum<-samp_num
 
   #set pam50 confidence cutoff
-  pamCC<<-0.75
+  pamCC<-pamCC
 
   #read in the data
   p_file=inputFile
@@ -66,7 +66,7 @@ setup=function(outDir){
   mo=m
   print("Filtering genes based on percentage:")
   print(sampleNum)
-  m=(m[rowSums(m != 0,na.rm=T)>(ncol(m)/100)*(100-sampleNum),])
+  m=(m[rowSums(m != 0,na.rm=T)>(ncol(m)/100)*(sampleNum),])
   #m=(m[rowSums(!is.na(m))>(ncol(m)/100)*(100-sampleNum),])
   #print(rowSums(m,na.rm=T))
   cat("Genes removed = ",dim(m),"\n")
@@ -519,11 +519,13 @@ run_scmgene=function(){
 #' @param outDir The directory containing for the output
 #' @param inputFile The full path to a dataframe of expression data with row names as gene symbols and column names as unique sample IDs
 #' @param short A short name for the analysis
-run_basal=function(outDir,inputFile,short){
+#' @param pamCC (default=0.75) Correlation confidence cutoff used to assign a PAM50 subtype as Low Confidence (LC)
+#' @param samp_num (default=5) Minumum percentage of samples containing value > 0 per gene
+run_basal=function(outDir,inputFile,short,pamCC=0.75,samp_num=5){
   outDir<<-outDir
   inputFile<<-inputFile
   short<<-short
-  setup(outDir)
+  setup(outDir,pamCC,samp_num)
   run_scmgene()
   run_p50()
   plot_summary(master_df,outDir)
