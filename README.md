@@ -2,7 +2,7 @@
 
 ### Overview
 
-Runs PAM50 and SCMGENE subtype methods on log2 expression data
+Runs PAM50 and SCMGENE subtype methods on log2 expression data.
 
 ### Requirements
 
