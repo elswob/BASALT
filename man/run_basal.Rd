@@ -4,7 +4,8 @@
 \alias{run_basal}
 \title{Run the subtype analysis}
 \usage{
-run_basal(outDir, inputFile, short)
+run_basal(outDir, inputFile, short, pamCC = 0.75, samp_num = 5,
+  remove_lc = TRUE)
 }
 \arguments{
 \item{outDir}{The directory containing for the output}
@@ -12,6 +13,10 @@ run_basal(outDir, inputFile, short)
 \item{inputFile}{The full path to a dataframe of expression data with row names as gene symbols and column names as unique sample IDs}
 
 \item{short}{A short name for the analysis}
+
+\item{pamCC}{(default=0.75) Correlation confidence cutoff used to assign a PAM50 subtype as Low Confidence (LC)}
+
+\item{samp_num}{(default=5) Minumum percentage of samples containing value > 0 per gene}
 }
 \description{
 Run the subtype analysis

@@ -4,7 +4,7 @@
 \alias{run_p50}
 \title{Run the standard PAM50 analysis.}
 \usage{
-run_p50()
+run_p50(pamCC, remove_lc)
 }
 \description{
 Run the standard PAM50 analysis.

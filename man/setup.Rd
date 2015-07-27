@@ -4,7 +4,7 @@
 \alias{setup}
 \title{Set up the analysis}
 \usage{
-setup(outDir)
+setup(outDir, inputFile, short, samp_num, pamCC)
 }
 \description{
 Set up the analysis

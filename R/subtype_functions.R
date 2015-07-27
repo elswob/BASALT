@@ -158,7 +158,7 @@ heatmap_col_colours=function(m){
 #' @param title The title for the heatmap
 #' @param pam.res The PAM50 results file
 makeHeatmap=function(m,title,pam.res){
-
+  print("Making heatmap...")
   rowData=heatmap_row_colours(m)
   rgVec=rowData[[1]]
   rgLegText=rowData[[2]]
@@ -304,20 +304,10 @@ run_p50=function(pamCC,remove_lc){
 
   write.table(m,file=paste(outDir,"/pam50_un-normalised.txt",sep=""),sep="\t",quote=F,row.names=T,col.names=NA)
 
-  #don't need to median normalise as does this by default but will do it for the heatmap
-  x<-apply(m,1,median,na.rm=T)
-  m_n<-m-x
-
   print(head(m)[,0:5])
 
-  #write to file
-  final_p_file=paste(outDir,"/pam50_median_normalised.txt",sep="")
-  write.table(m_n,file=final_p_file,sep="\t",quote=F,row.names=T,col.names=NA)
-
   #inputFile="pam50_median_normalised_10_each.txt"
-  inputFile<<-paste0(outDir,"/pam50_median_normalised.txt")
-  #short<<-"res"
-  outDir <<- outDir
+  inputFile<-paste0(outDir,"/pam50_median_normalised.txt")
 
   ### Run PAM50
   print("Running PAM50")
@@ -326,9 +316,8 @@ run_p50=function(pamCC,remove_lc){
 
   ### Plot the output
   pam.result.file <- paste(outDir,"/",short,"_pam50scores.txt",sep="")
-  pam.res <<- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
-  print(m[0:5,0:5])
-  print(pam.res[0:5,0:5])
+  pam.res <- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
+  #print(pam.res[0:5,0:5])
 
   #find calls with low confidence and either remove or flag
   print("Low confidence calls...")
@@ -342,8 +331,7 @@ run_p50=function(pamCC,remove_lc){
     pam.res$Call[pam.res$Confidence<pamCC]="Low Conf"
   }
   print(dim(m))
-  print(m[0:5,0:5])
-  print(pam.res[0:5,0:5])
+  #print(pam.res[0:5,0:5])
 
   #heatmaps
   pdf(paste(outDir,"/heatmap_raw_data.pdf",sep=""))
@@ -352,6 +340,16 @@ run_p50=function(pamCC,remove_lc){
   png(paste(outDir,"/heatmap_raw_data.png",sep=""))
   h=makeHeatmap(m,"PAM50 raw heatmap",pam.res)
   dev.off()
+
+  #don't need to median normalise as does this by default but will do it for the heatmap
+  x<-apply(m,1,median,na.rm=T)
+  m_n<-m-x
+  print("median normalised:")
+  print(m_n[0:5,0:5])
+
+  #write to file
+  final_p_file=paste(outDir,"/pam50_median_normalised.txt",sep="")
+  write.table(m_n,file=final_p_file,sep="\t",quote=F,row.names=T,col.names=NA)
 
   pdf(paste(outDir,"/heatmap_median_centered.pdf",sep=""))
   h=makeHeatmap(m_n,"PAM50 median centered heatmap",pam.res)
@@ -365,16 +363,20 @@ run_p50=function(pamCC,remove_lc){
   names(master_df)[names(master_df)=="Call"]<<-"PAM50"
   print(head(master_df))
 
-  x=pam.res$Confidence; names(x) <- rownames(pam.res)
-  qplot(x, main="Classification into subtypes", xlab="Confidence")
-
-  pdf(paste(outDir,"/classification_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "PAM50 classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  pam.res$sample_sub = sub("_.*","",rownames(pam.res))
+  pam.res$sample = rownames(pam.res)
+  print(head(pam.res))
+  pdf(paste(outDir,"/classification_plot_grouped_pc.pdf",sep=""))
+  g<-ggplot(data = pam.res, aes(x = sample_sub, fill = Call)) + geom_bar(position="fill") + labs(title = "PAM50 classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   dev.off()
 
-  qplot(Confidence, Call, data=pam.res, col=Call, main="Classification into subtypes") + geom_vline(xintercept=0.9, col="red", lty=2)
-  g <- ggplot(pam.res, aes(factor(rownames(pam.res)), Confidence)) + geom_bar(stat = "identity",aes(fill = Call)) + labs(title = "PAM50 classification", y = "Classification Confidence", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  pdf(paste(outDir,"/classification_plot_grouped_counts.pdf",sep=""))
+  g<-ggplot(data = pam.res, aes(x = sample_sub, fill = Call)) + geom_bar() + labs(title = "PAM50 classification counts", y = "Classification Counts", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  print(g)
+  dev.off()
+
+  g <- ggplot(pam.res, aes(sample, Confidence)) + geom_bar(stat = "identity",aes(fill = Call)) + labs(title = "PAM50 classification", y = "Classification Confidence", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   pdf(paste(outDir,"/classification_plot_ungrouped.pdf",sep=""))
   print(g)
@@ -510,8 +512,9 @@ run_scmgene=function(){
   pam.res <- read.delim(pam.result.file, stringsAsFactors=F, row.names=1, check=F)
   colnames(pam.res)[1]="Call"
   print(head(pam.res))
+  pam.res$sample = sub("_.*","",rownames(pam.res))
   pdf(paste(outDir,"/pam50_robust_classification_plot_grouped.pdf",sep=""))
-  g<-ggplot(data = pam.res, aes(x = sub("_.*","",rownames(pam.res)), fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE PAM50 robust classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
+  g<-ggplot(data = pam.res, aes(x = sample, fill = Call)) + geom_bar(position="fill") + labs(title = "SCMGENE PAM50 robust classification counts", y = "Classification Percentage", x = "Sample", fill = "PAM50 Subtype") + theme(text = element_text(size=10), axis.text.x = element_text(angle = 45, hjust = 1))
   print(g)
   dev.off()
 
