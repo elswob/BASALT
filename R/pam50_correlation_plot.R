@@ -40,6 +40,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 #' @param p50 The PAM50 results text file
 #' @param id The ID of the samples to extract
 #' @param name The name to represent the samples
+#' @param outDir The output directory
 cor_plot = function(p,id,name,outDir){
   print(paste0("Generating correlation plots - ",id," - ",name))
   p$X=rownames(p)
@@ -90,5 +91,3 @@ cor_plot = function(p,id,name,outDir){
   multiplot(p1,p2,cols=2)
   dev.off()
 }
-
-#cor_plot(p50_res,".","name")

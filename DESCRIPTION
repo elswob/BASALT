@@ -1,10 +1,10 @@
-Package: BASAL
+Package: BASALT
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Breast Cancer Subtype Analysis Tool
 Version: 0.1
 Date: 2015-07-08
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Ben Elsworth
+Maintainer: <elswob@gmail.com>
+Description: Breast Cancer Subtype Analysis
+License: None
 LazyData: TRUE
