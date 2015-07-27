@@ -42,7 +42,7 @@ pam50_wrapper=function(outDir,inputFile,short){
   # begin analyses
 
   # only need train data for visualizations
-  print(paste0("reading trainFile - ",trainFile))
+  #print(paste0("reading trainFile - ",trainFile))
   x<-readarray(trainFile,hr=2)
   print(summary(x))
   x$xd<-standardize(medianCtr(x$xd))

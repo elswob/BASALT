@@ -307,7 +307,7 @@ run_p50=function(pamCC,remove_lc){
   print(head(m)[,0:5])
 
   #inputFile="pam50_median_normalised_10_each.txt"
-  inputFile<-paste0(outDir,"/pam50_median_normalised.txt")
+  inputFile<-paste0(outDir,"/pam50_un-normalised.txt")
 
   ### Run PAM50
   print("Running PAM50")
@@ -383,7 +383,7 @@ run_p50=function(pamCC,remove_lc){
   dev.off()
 
   #plot the correlation coefficients
-  cor_plot(pam.res,".",short)
+  cor_plot(pam.res,".",short,outDir)
 }
 
 ################# SCMGENE #######################
