@@ -52,10 +52,10 @@ library(ctc)
 library(devtools)
 ```
 
-Install and load BASAL
+Install and load BASALT
 ```
-install_github("elswob/BASAL")
-libary(BASAL)
+install_github("elswob/BASALT")
+libary(BASALT)
 ```
 
 ### To run
@@ -69,8 +69,8 @@ Need three arguements:
 Example breast cancer data from the Cancer Cell Line Encyclopedia (CCLE) is available for testing.
 
 ```
-s=system.file("extdata","CCLE.tsv",package="BASAL")
-run_basal("~/subtype_test",s,"ccle")
+s=system.file("extdata","CCLE.tsv",package="BASALT")
+run_basalt("~/subtype_test",s,"ccle")
 ```
 
 ### Output
@@ -96,7 +96,7 @@ attached base packages:
 other attached packages:
  [1] impute_1.42.0        ctc_1.42.0           amap_0.8-14          RColorBrewer_1.1-2   reshape_0.8.5        heatmap.plus_1.3     genefu_1.18.0        biomaRt_2.24.0      
  [9] mclust_5.0.1         survcomp_1.18.0      prodlim_1.5.1        survival_2.38-3      org.Hs.eg.db_3.1.2   RSQLite_1.0.0        DBI_0.3.1            AnnotationDbi_1.30.1
-[17] GenomeInfoDb_1.4.1   IRanges_2.2.5        S4Vectors_0.6.1      Biobase_2.28.0       BiocGenerics_0.14.0  gplots_2.17.0        ggplot2_1.0.1        BASAL_0.1           
+[17] GenomeInfoDb_1.4.1   IRanges_2.2.5        S4Vectors_0.6.1      Biobase_2.28.0       BiocGenerics_0.14.0  gplots_2.17.0        ggplot2_1.0.1        BASALT_0.1           
 
 loaded via a namespace (and not attached):
  [1] Rcpp_0.11.6        plyr_1.8.3         bitops_1.0-6       tools_3.2.0        digest_0.6.8       gtable_0.1.2       proto_0.3-10       bootstrap_2015.2   stringr_1.0.0     
