@@ -1,19 +1,19 @@
-#load libraries
-library(ggplot2)
-library(gplots)
-library(org.Hs.eg.db)
-library(genefu)
-library(heatmap.plus)
-library(reshape)
-library(RColorBrewer)
-library(ctc)
-
 #' Set up the analysis
 setup=function(outDir,inputFile,short,samp_num,pamCC){
+  #load libraries
+  library(ggplot2)
+  library(gplots)
+  library(org.Hs.eg.db)
+  library(genefu)
+  library(heatmap.plus)
+  library(reshape)
+  library(RColorBrewer)
+  library(ctc)
+
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
   #write conf to file
-  fileConn<-file(paste0(outDir,"BASALT.conf"))
+  fileConn<-file(paste0(outDir,"/BASALT.conf"))
   writeLines(c(paste0("outDir = ",outDir),paste0("inputFile = ",inputFile),paste0("short = ",short),paste0("samp_num = ",samp_num),paste0("pamCC = ",pamCC)), fileConn)
   close(fileConn)
 
