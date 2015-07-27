@@ -1,4 +1,4 @@
-# Breast cAncer Subtype AnaLysis
+# Breast cAncer Subtype AnaLysis Tool
 
 ### Overview
 

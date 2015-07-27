@@ -13,7 +13,7 @@ setup=function(outDir,inputFile,short,samp_num,pamCC){
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
   #write conf to file
-  fileConn<-file(paste0(outDir,"BASAL.conf"))
+  fileConn<-file(paste0(outDir,"BASALT.conf"))
   writeLines(c(paste0("outDir = ",outDir),paste0("inputFile = ",inputFile),paste0("short = ",short),paste0("samp_num = ",samp_num),paste0("pamCC = ",pamCC)), fileConn)
   close(fileConn)
 
@@ -537,7 +537,7 @@ run_scmgene=function(){
 #' @param short A short name for the analysis
 #' @param pamCC (default=0.75) Correlation confidence cutoff used to assign a PAM50 subtype as Low Confidence (LC)
 #' @param samp_num (default=5) Minumum percentage of samples containing value > 0 per gene
-run_basal=function(outDir,inputFile,short,pamCC=0.75,samp_num=5,remove_lc=TRUE){
+run_basalt=function(outDir,inputFile,short,pamCC=0.75,samp_num=5,remove_lc=TRUE){
   outDir<<-outDir
   inputFile<<-inputFile
   short<<-short
