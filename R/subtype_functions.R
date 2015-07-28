@@ -538,6 +538,7 @@ run_scmgene=function(){
 #' @param short A short name for the analysis
 #' @param pamCC (default=0.75) Correlation confidence cutoff used to assign a PAM50 subtype as Low Confidence (LC)
 #' @param samp_num (default=5) Minumum percentage of samples containing value > 0 per gene
+#' @param remove_lc (default TRUE) Remove the samples with a corerrelation confidence less than pamCC
 run_basalt=function(outDir,inputFile,short,pamCC=0.75,samp_num=5,remove_lc=TRUE){
   outDir<<-outDir
   inputFile<<-inputFile
