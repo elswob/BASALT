@@ -88,6 +88,9 @@ run_basalt("~/subtype_test",s,"ccle")
 1. A combined tsv file for all subtype methods (subtype_summary.tsv)
 2. Detailed output from PAM50 and SCMGENE
 
+| BASALT.conf | A configuration file with details of the analysis run |
+| subtype_summary.tsv | A summary of all subtype calls for all samples |
+
 
 ### Session Info
 
