@@ -86,10 +86,18 @@ run_basalt("~/subtype_test",s,"ccle")
 ### Output
 
 1. A combined tsv file for all subtype methods (subtype_summary.tsv)
-2. Detailed output from PAM50 and SCMGENE
+2. Detailed output from PAM50 and SCMGENE, including:
 
-| BASALT.conf | A configuration file with details of the analysis run |
-| subtype_summary.tsv | A summary of all subtype calls for all samples |
+File | Description
+---- | ---------- 
+BASALT.conf | A configuration file with details of the analysis run
+subtype_summary.tsv | A summary of all subtype calls for all samples
+subtype_summary_pc.pdf | A summary plot of all subtype calls by percentage
+subtype_summary_counts.pdf | A summary plot of all subtype calls by counts
+scmgene/pam50_robus_classification_plot_grouped.pdf | A plot of subtype calls for the genefu robust PAM50 method by percentage
+PAM50/classification_plot_grouped_counts.pdf | A plot of PAM50 subtype calls by counts
+PAM50/classification_plot_grouped_pc.pdf | A plot of PAM50 subtype calls by percentage
+PAM50/heatmap_median_centered.pdf | A heatmap displaying unsupervised hierarchincal clustering of the median centred data
 
 
 ### Session Info
