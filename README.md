@@ -62,6 +62,7 @@ library(devtools)
 ```
 
 Install and load BASALT
+
 ```
 install_github("elswob/BASALT")
 library(BASALT)
