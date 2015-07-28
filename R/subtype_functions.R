@@ -1,5 +1,5 @@
 #' Set up the analysis
-setup=function(outDir,inputFile,short,samp_num,pamCC){
+setup=function(outDir,inputFile,short,samp_num,pamCC,remove_lc){
   #load libraries
   library(ggplot2)
   library(gplots)
@@ -13,8 +13,8 @@ setup=function(outDir,inputFile,short,samp_num,pamCC){
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
   #write conf to file
-  fileConn<-file(paste0(outDir,"/BASALT.conf"))
-  writeLines(c(paste0("outDir = ",outDir),paste0("inputFile = ",inputFile),paste0("short = ",short),paste0("samp_num = ",samp_num),paste0("pamCC = ",pamCC)), fileConn)
+  fileConn<-file(paste0(outDir,"/BASALT_conf.txt"))
+  writeLines(c(paste0("outDir = ",outDir),paste0("inputFile = ",inputFile),paste0("short = ",short),paste0("samp_num = ",samp_num),paste0("pamCC = ",pamCC), paste0("remove low conf calls = ",remove_lc)), fileConn)
   close(fileConn)
 
   print(paste0('pamCC = ',pamCC))
@@ -541,7 +541,7 @@ run_basalt=function(outDir,inputFile,short,pamCC=0.75,samp_num=5,remove_lc=TRUE)
   outDir<<-outDir
   inputFile<<-inputFile
   short<<-short
-  setup(outDir,inputFile,short,samp_num,pamCC)
+  setup(outDir,inputFile,short,samp_num,pamCC,remove_lc)
   run_scmgene()
   run_p50(pamCC,remove_lc)
   plot_summary(master_df,outDir)
