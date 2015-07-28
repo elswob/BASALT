@@ -21,6 +21,15 @@ AANAT	4.118585	4.168364	3.84862	3.839901	4.013059	4.515908	3.721725	3.903788
 AARS	10.73831	10.82067	10.40384	9.457173	10.26427	10.38802	10.48933	9.772005
 ``` 
 
+Optionally uses prefix before first underscore to group samples togeter. For example, many single cells with the same prefix will be grouped.
+
+```
+MCF-7_01  MCF-7
+MCF-7_02  MCF-7
+BT474_01  BT474
+BT474_02  BT474
+```
+
 ### Installation
 
 Install some libraries
@@ -28,7 +37,6 @@ Install some libraries
 ```
 install.packages("ggplot2")
 install.packages("gplots")
-install.packages("org.Hs.eg.db")
 install.packages("heatmap.plus")
 install.packages("reshape")
 install.packages("RColorBrewer")
@@ -36,6 +44,7 @@ install.packages("devtools")
 source("http://bioconductor.org/biocLite.R")
 biocLite("genefu")
 biocLite("ctc")
+biocLite("org.Hs.eg.db")
 ```
 
 Load them up
@@ -55,7 +64,7 @@ library(devtools)
 Install and load BASALT
 ```
 install_github("elswob/BASALT")
-libary(BASALT)
+library(BASALT)
 ```
 
 ### To run
