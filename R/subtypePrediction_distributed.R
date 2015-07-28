@@ -12,9 +12,9 @@
 
 pam50_wrapper=function(outDir,inputFile,short){
 
-  calibrationFile<- system.file("extdata","mediansPerDataset_v2.txt",package="BASAL")
-  trainCentroids<- system.file("extdata","pam50_centroids.txt",package="BASAL")
-  trainFile<<- system.file("extdata","220arrays_nonUBCcommon+12normal_50g.txt",package="BASAL")
+  calibrationFile<- system.file("extdata","mediansPerDataset_v2.txt",package="BASALT")
+  trainCentroids<- system.file("extdata","pam50_centroids.txt",package="BASALT")
+  trainFile<<- system.file("extdata","220arrays_nonUBCcommon+12normal_50g.txt",package="BASALT")
   proliferationGenes<-c("CCNB1","UBE2C","BIRC5","KNTC2","CDC20","PTTG1","RRM2","MKI67","TYMS","CEP55","CDCA1")
   stdArray<-T # just for visualization, and only set to F if many missing genes
   predFiles<- inputFile
