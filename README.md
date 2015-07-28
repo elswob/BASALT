@@ -45,6 +45,7 @@ source("http://bioconductor.org/biocLite.R")
 biocLite("genefu")
 biocLite("ctc")
 biocLite("org.Hs.eg.db")
+biocLite("impute")
 ```
 
 Load them up
@@ -59,6 +60,7 @@ library(RColorBrewer)
 library(genefu)
 library(ctc)
 library(devtools)
+library(impute)
 ```
 
 Install and load BASALT

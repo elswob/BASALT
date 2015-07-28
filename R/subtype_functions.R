@@ -9,6 +9,7 @@ setup=function(outDir,inputFile,short,samp_num,pamCC,remove_lc){
   library(reshape)
   library(RColorBrewer)
   library(ctc)
+  library(impute)
 
   #make the output directory if it doesn't already exist
   dir.create(outDir,showWarnings = F)
